@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-crm
+    ports:
+      - "5672:5672" # Porta pra aplicação Java
+      - "15672:15672" # Porta grafico navegador
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    restart: always
