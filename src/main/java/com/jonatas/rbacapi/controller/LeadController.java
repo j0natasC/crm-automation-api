@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jonatas.rbacapi.domain.entity.Lead;
 import com.jonatas.rbacapi.repository.LeadRepository;
+import com.jonatas.rbacapi.service.LeadProducer;
 
 @RestController
 @RequestMapping("/leads")
@@ -17,10 +18,18 @@ public class LeadController {
     @Autowired
     private LeadRepository leadRepository;
 
+    @Autowired
+    private LeadProducer leadProducer;
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Lead criar(@RequestBody Lead lead) {
-        return leadRepository.save(lead);
+        Lead leadSalvo = leadRepository.save(lead);
+
+        leadProducer.enviarParaFila(leadSalvo);
+
+        return leadSalvo;
+
     }
 
 }
