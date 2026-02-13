@@ -9,6 +9,6 @@ public class AdminController {
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public String adminOnly() {
-        return "O acesso foi liberado";
+        return "Acesso liberado";
     }
 }
